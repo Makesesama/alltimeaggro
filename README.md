@@ -4,7 +4,7 @@ A Minecraft datapack that makes every hostile mob aggro on the nearest player at
 
 ## What it does
 
-- Sets `follow_range` to 512 blocks on every hostile mob
+- Sets `follow_range` to 128 blocks on every hostile mob (Y-gated to ±24 from a player to skip deep cave mobs)
 - Periodically pokes mobs with a zero-damage "player attack" so they treat the nearest player as their target
 - Re-applies aggro every 30 seconds for mobs near players, so chunk reloads and target loss don't break the effect
 - Resets aggro on player death and on dimension change
