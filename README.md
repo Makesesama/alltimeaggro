@@ -36,6 +36,31 @@ git clone https://github.com/Makesesama/alltimeaggro.git
 
 Then `/reload` in-game.
 
+## Configuration
+
+Tunables live in `data/aggro/function/config.mcfunction`. Edit, save, then `/reload` in-game.
+
+| Variable | Default | What it does |
+| --- | --- | --- |
+| `$y_range` | `24` | Vertical aggro window in blocks. Mobs only aggro if a player is within ±`y_range` Y. Lower = better TPS, fewer cave mobs swarming you from far below. |
+| `$follow_range` | `128` | `follow_range` attribute set on each hostile. Pathfinding cost scales ~quadratically with this — keep modest. The periodic re-aggro tick handles longer-range targeting. |
+| `$dy` | auto | Computed as `y_range * 2`. Don't edit. |
+
+### Changing values in-game without /reload
+
+The macros read from storage every tick, so you can override at runtime:
+
+```
+/data modify storage aggro:config y_range set value 16
+/data modify storage aggro:config dy set value 32
+/data modify storage aggro:config follow_range set value 64
+```
+
+Caveats:
+- If you change `y_range`, set `dy` to `y_range * 2` manually.
+- Runtime overrides are lost on `/reload` (config re-runs and resets to file defaults).
+- `follow_range` only applies to *newly loaded* mobs. Existing mobs keep their old attribute until they unload.
+
 ## Verifying it's loaded
 
 Run `/datapack list` — you should see `[file/alltimeaggro]` (or `[file/alltimeaggro.zip]`) in the enabled list. Hostile mobs within ~64 blocks of you should start pathing toward you immediately.
